@@ -8,9 +8,8 @@
 </head>
 <body>
 <center>
-<h2>헬로월드</h2>
+<h2>${msg }</h2>
 <hr>
-	현재 날짜와 시간은 : <%=new java.util.Date()  %> 입니다
 </center>
 </body>
 </html>
