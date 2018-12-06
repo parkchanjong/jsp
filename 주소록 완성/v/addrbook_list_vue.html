@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    />
+
+    <meta charset="UTF-8" />
+    <title>AddressBook List</title>
+  </head>
+  <body>
+    <h2>AddressBook::List</h2>
+    <hr />
+    <a href="addrbook/addrbook_form.jsp">New Entry</a>
+    <p></p>
+    <div id="app">
+      <table border="1">
+        <thead>
+          <tr>
+            <th>#No</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>CellPhone</th>
+            <th>Birth Date</th>
+            <th>Company</th>
+            <th>Memo</th>
+          </tr>
+        </thead>
+
+        <tr v-for="ab in datas">
+          <td>
+            <a href="">{{ ab.ab_id }}</a>
+          </td>
+          <td>${ab.ab_name}</td>
+          <td>${ab.ab_email}</td>
+          <td>${ab.ab_tel}</td>
+          <td>${ab.ab_birth}</td>
+          <td>${ab.ab_comdept}</td>
+          <td>${ab.ab_memo}</td>
+        </tr>
+      </table>
+    </div>
+    <script>
+      var ex = new Vue({
+        el: "#app", //셀렉터
+        data: {
+          datas: []
+        },
+        computad: {
+          hasResult: function() {
+            return this.posts.length > 0;
+          }
+        },
+        created: function() {
+          //콜백 함수			es6 const 상수
+          const beaseURI = "http://localhost:8080/javaweb/api/addrbook";
+          axios //rest 콜하는  			서드파티 라이브 러리	 j쿼리 하는 것보다 편함
+            .get("${baseURI}/list") //호출
+            .then(result => {
+              //받아온다
+              console.log(result);
+              this.datas = result.data;
+            });
+        }
+      }); //ajax 같은 서버에서만 동작한다-> 서버에서 가져온 html만 로드
+      // 크로스 오리진 문제   html 위치와 rest서버 위치가 동일하지 않으면 동작하지 않는다
+      //필터같은것을 만들어 정책을 만들어 줘야 한다
+    </script>
+  </body>
+</html>
